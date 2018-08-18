@@ -11,20 +11,13 @@ sum' (x:xs) = x + sum' xs
 product' []     = 1
 product' (x:xs) = x * product' xs
 
--- take' 0 _       = []
--- take' _ []      = []
--- take' n (x:xs)  = [x] ++ take' (n - 1) xs
+take' _ []          = []
+take' n _ | n < 1   = []
+take' n (x:xs)      = [x] ++ take' (n - 1) xs
 
--- パターンマッチよりガードの方が１回分再帰が減って良さそう？
-take' n (x:xs)
-    | n  == 0   = []
-    | xs == []  = [x]
-    | otherwise = [x] ++ take' (n - 1) xs
-
--- とはいえパターンマッチの方がわかりやすい感じがしていいかもしれない
-drop' 0 xs = xs
-drop' _ [] = []
-drop' n (_:xs) = drop' (n - 1) xs
+drop' _ []          = []
+drop' n xs | n < 1  = xs
+drop' n (_:xs)      = drop' (n - 1) xs
 
 reverse' []     = []
 reverse' (x:xs) = reverse' xs ++ [x]
